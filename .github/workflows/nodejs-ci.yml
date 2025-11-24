@@ -1,0 +1,48 @@
+name: Node CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      # Use an explicit test NODE_ENV and force DB synchronization off in CI
+      NODE_ENV: test
+      DB_SYNCHRONIZE: 'false'
+      DB_SSL: 'false'
+      # DATABASE_URL is pulled from secrets when present. If not present it will be empty
+      # Use secret DATABASE_URL in repo settings if available. Left empty by default to
+      # avoid exposing secrets in public CI logs. CI will read this value if set.
+      DATABASE_URL: ''
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint code
+        run: npm run lint
+
+      - name: Run tests
+        run: npm test --silent
+
+      # optional: add coverage upload here if you generate coverage files during CI

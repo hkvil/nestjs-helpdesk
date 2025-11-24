@@ -1,8 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { SlaPolicy } from './entities/sla-policy.entity';
+import { CreateSlaDto } from './dto/create-sla.dto';
+import { UpdateSlaDto } from './dto/update-sla.dto';
 
 @Injectable()
 export class SlaService {
+    constructor(@InjectRepository(SlaPolicy) private slaRepo: Repository<SlaPolicy>) {}
     calculateDueDate(policy: SlaPolicy, startDate: Date): Date {
         if (!policy.operational_hours) {
             // If no operational hours, just add the time directly
@@ -71,5 +76,33 @@ export class SlaService {
     private getDayName(dayIndex: number): string {
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         return days[dayIndex];
+    }
+
+    // CRUD helpers
+    create(dto: CreateSlaDto) {
+        const p = this.slaRepo.create(dto as any);
+        return this.slaRepo.save(p);
+    }
+
+    findAll() {
+        return this.slaRepo.find();
+    }
+
+    async findOne(id: number) {
+        const s = await this.slaRepo.findOneBy({ id });
+        if (!s) throw new NotFoundException(`SLA policy ${id} not found`);
+        return s;
+    }
+
+    async update(id: number, dto: UpdateSlaDto) {
+        const s = await this.findOne(id);
+        Object.assign(s, dto);
+        return this.slaRepo.save(s);
+    }
+
+    async remove(id: number) {
+        const s = await this.findOne(id);
+        await this.slaRepo.remove(s);
+        return { deleted: true };
     }
 }

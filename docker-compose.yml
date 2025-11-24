@@ -1,8 +1,6 @@
-version: '3.8'
-
 services:
   app:
-    # Use the published image (pull from GHCR). If you prefer to build locally, replace image with 'build: .'
+    # Image tag is kept so the built image can also be pushed/identified (optional)
     image: ghcr.io/hkvil/nestjs-helpdesk:main
     env_file: .env
     ports:

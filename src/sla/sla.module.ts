@@ -8,5 +8,6 @@ import { SlaPolicy } from './entities/sla-policy.entity';
   imports: [TypeOrmModule.forFeature([SlaPolicy])],
   controllers: [SlaController],
   providers: [SlaService],
+  exports: [SlaService],
 })
 export class SlaModule { }

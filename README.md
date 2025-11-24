@@ -29,6 +29,8 @@
 
 ```bash
 $ npm install
+
+Copy `.env.example` to `.env` and set `DATABASE_URL` and other env vars before starting the app or running the seed script.
 ```
 
 ## Compile and run the project
@@ -55,6 +57,14 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+
+## Development helpers
+
+To seed development data (make sure your DB is configured via `.env`):
+
+```bash
+$ npm run seed
+```
 ```
 
 ## Deployment

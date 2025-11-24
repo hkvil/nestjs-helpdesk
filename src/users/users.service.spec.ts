@@ -24,4 +24,11 @@ describe('UsersService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  it('should find user by username', async () => {
+    const u = { id: 5, username: 'bob', email: 'b@example.com' } as User;
+    (mockRepository.findOneBy as jest.Mock).mockResolvedValueOnce(u);
+    await expect(service.findByUsername('bob')).resolves.toEqual(u);
+    expect(mockRepository.findOneBy).toHaveBeenCalledWith({ username: 'bob' });
+  });
 });

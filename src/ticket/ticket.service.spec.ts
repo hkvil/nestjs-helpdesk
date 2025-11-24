@@ -35,7 +35,10 @@ describe('TicketService', () => {
         { provide: getRepositoryToken(Ticket), useValue: mockRepository },
         { provide: getRepositoryToken(Reporter), useValue: mockRepository },
         { provide: getRepositoryToken(TicketStage), useValue: mockRepository },
-        { provide: getRepositoryToken(TicketAssignee), useValue: mockRepository },
+        {
+          provide: getRepositoryToken(TicketAssignee),
+          useValue: mockRepository,
+        },
         { provide: getRepositoryToken(SlaPolicy), useValue: mockRepository },
         { provide: SlaService, useValue: mockSlaService },
         { provide: UsersService, useValue: mockUsersService },

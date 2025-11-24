@@ -2,33 +2,33 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class Reporter {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    organization_assignment: string;
+  @Column()
+  organization_assignment: string;
 
-    @Column({ type: 'date' })
-    start_date: Date;
+  @Column({ type: 'date' })
+  start_date: Date;
 
-    @Column({ type: 'date' })
-    end_date: Date;
+  @Column({ type: 'date' })
+  end_date: Date;
 
-    @Column()
-    persnum: string;
+  @Column()
+  persnum: string;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column()
-    company: string;
+  @Column()
+  company: string;
 
-    @Column()
-    area: string;
+  @Column()
+  area: string;
 
-    @Column()
-    sub_area: string;
+  @Column()
+  sub_area: string;
 
-    @Column()
-    position: string;
+  @Column()
+  position: string;
 }

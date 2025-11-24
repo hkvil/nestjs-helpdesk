@@ -1,9 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SlaController } from './sla.controller';
+import { CreateSlaDto } from './dto/create-sla.dto';
 import { SlaService } from './sla.service';
 
 const mockSlaService = {
-  create: jest.fn().mockImplementation((dto) => Promise.resolve({ id: 1, ...dto })),
+  create: jest
+    .fn()
+    .mockImplementation((dto) => Promise.resolve({ id: 1, ...dto })),
   findAll: jest.fn().mockResolvedValue([]),
 };
 
@@ -24,8 +27,11 @@ describe('SlaController', () => {
   });
 
   it('should create SLA', async () => {
-    const dto = { name: 'Standard' };
-    await expect(controller.create(dto as any)).resolves.toEqual({ id: 1, ...dto });
+    const dto: CreateSlaDto = { name: 'Standard' };
+    await expect(controller.create(dto)).resolves.toEqual({
+      id: 1,
+      ...dto,
+    });
     expect(mockSlaService.create).toHaveBeenCalledWith(dto);
   });
 

@@ -3,24 +3,24 @@ import { Ticket } from './ticket.entity';
 
 @Entity()
 export class TicketAssignee {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @ManyToOne(() => Ticket, (ticket) => ticket.assignees)
-    ticket: Ticket;
+  @ManyToOne(() => Ticket, (ticket) => ticket.assignees)
+  ticket: Ticket;
 
-    @Column()
-    persnum: string;
+  @Column()
+  persnum: string;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column({ default: false })
-    accept: boolean;
+  @Column({ default: false })
+  accept: boolean;
 
-    @Column({ type: 'timestamp', nullable: true })
-    accept_datetime: Date;
+  @Column({ type: 'timestamp', nullable: true })
+  accept_datetime: Date;
 
-    @Column({ nullable: true })
-    note: string;
+  @Column({ nullable: true })
+  note: string;
 }

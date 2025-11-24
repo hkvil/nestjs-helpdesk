@@ -15,7 +15,10 @@ describe('UsersService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [UsersService, { provide: getRepositoryToken(User), useValue: mockRepository }],
+      providers: [
+        UsersService,
+        { provide: getRepositoryToken(User), useValue: mockRepository },
+      ],
     }).compile();
 
     service = module.get<UsersService>(UsersService);
@@ -27,7 +30,7 @@ describe('UsersService', () => {
 
   it('should find user by username', async () => {
     const u = { id: 5, username: 'bob', email: 'b@example.com' } as User;
-    (mockRepository.findOneBy as jest.Mock).mockResolvedValueOnce(u);
+    mockRepository.findOneBy.mockResolvedValueOnce(u);
     await expect(service.findByUsername('bob')).resolves.toEqual(u);
     expect(mockRepository.findOneBy).toHaveBeenCalledWith({ username: 'bob' });
   });

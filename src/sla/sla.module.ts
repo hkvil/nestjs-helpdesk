@@ -10,4 +10,4 @@ import { SlaPolicy } from './entities/sla-policy.entity';
   providers: [SlaService],
   exports: [SlaService],
 })
-export class SlaModule { }
+export class SlaModule {}

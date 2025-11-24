@@ -3,12 +3,12 @@ import { Category } from './category.entity';
 
 @Entity()
 export class Channel {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @OneToMany(() => Category, (category) => category.channel)
-    categories: Category[];
+  @OneToMany(() => Category, (category) => category.channel)
+  categories: Category[];
 }

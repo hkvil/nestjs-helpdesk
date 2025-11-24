@@ -27,4 +27,4 @@ import { UsersModule } from '../users/users.module';
   controllers: [TicketController],
   providers: [TicketService],
 })
-export class TicketModule { }
+export class TicketModule {}

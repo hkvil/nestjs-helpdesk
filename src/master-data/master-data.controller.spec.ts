@@ -1,9 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MasterDataController } from './master-data.controller';
 import { MasterDataService } from './master-data.service';
+import { CreateChannelDto } from './dto/create-channel.dto';
 
 const mockService = {
-  createChannel: jest.fn().mockImplementation((dto) => Promise.resolve({ id: 1, ...dto })),
+  createChannel: jest
+    .fn()
+    .mockImplementation((dto) => Promise.resolve({ id: 1, ...dto })),
   findAllChannels: jest.fn().mockResolvedValue([]),
 };
 
@@ -24,8 +27,11 @@ describe('MasterDataController', () => {
   });
 
   it('should create a channel', async () => {
-    const dto = { name: 'IT' };
-    await expect(controller.createChannel(dto as any)).resolves.toEqual({ id: 1, ...dto });
+    const dto: CreateChannelDto = { name: 'IT' };
+    await expect(controller.createChannel(dto)).resolves.toEqual({
+      id: 1,
+      ...dto,
+    });
     expect(mockService.createChannel).toHaveBeenCalledWith(dto);
   });
 

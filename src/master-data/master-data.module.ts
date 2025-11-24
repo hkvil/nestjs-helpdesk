@@ -23,4 +23,4 @@ import { PicGroupMember } from './entities/pic-group-member.entity';
   controllers: [MasterDataController],
   providers: [MasterDataService],
 })
-export class MasterDataModule { }
+export class MasterDataModule {}

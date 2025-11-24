@@ -3,18 +3,18 @@ import { PicGroupMember } from './pic-group-member.entity';
 
 @Entity()
 export class PicGroup {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    pic_group: string;
+  @Column()
+  pic_group: string;
 
-    @Column({ nullable: true })
-    description: string;
+  @Column({ nullable: true })
+  description: string;
 
-    @Column({ default: true })
-    active: boolean;
+  @Column({ default: true })
+  active: boolean;
 
-    @OneToMany(() => PicGroupMember, (member) => member.group)
-    members: PicGroupMember[];
+  @OneToMany(() => PicGroupMember, (member) => member.group)
+  members: PicGroupMember[];
 }

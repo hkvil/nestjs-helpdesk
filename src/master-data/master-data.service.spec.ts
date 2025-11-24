@@ -2,15 +2,21 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { MasterDataService } from './master-data.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Channel } from './entities/channel.entity';
+import { CreateChannelDto } from './dto/create-channel.dto';
+import { Repository } from 'typeorm';
 import { Category } from './entities/category.entity';
 import { SubCategory } from './entities/sub-category.entity';
 import { Pipeline } from './entities/pipeline.entity';
 import { PicGroup } from './entities/pic-group.entity';
 import { PicGroupMember } from './entities/pic-group-member.entity';
 
-const mockRepo = {
-  create: jest.fn().mockImplementation((dto) => dto),
-  save: jest.fn().mockImplementation((dto) => Promise.resolve({ id: 1, ...dto })),
+const mockRepo: Partial<Repository<Channel>> = {
+  create: jest.fn().mockImplementation((dto: any) => dto as Channel),
+  save: jest
+    .fn()
+    .mockImplementation((dto: any) =>
+      Promise.resolve({ id: 1, ...(dto as Channel) } as Channel),
+    ),
   find: jest.fn().mockResolvedValue([]),
   findOne: jest.fn(),
   findOneBy: jest.fn(),
@@ -24,12 +30,30 @@ describe('MasterDataService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         MasterDataService,
-        { provide: getRepositoryToken(Channel), useValue: mockRepo },
-        { provide: getRepositoryToken(Category), useValue: mockRepo },
-        { provide: getRepositoryToken(SubCategory), useValue: mockRepo },
-        { provide: getRepositoryToken(Pipeline), useValue: mockRepo },
-        { provide: getRepositoryToken(PicGroup), useValue: mockRepo },
-        { provide: getRepositoryToken(PicGroupMember), useValue: mockRepo },
+        {
+          provide: getRepositoryToken(Channel),
+          useValue: mockRepo as unknown as Repository<Channel>,
+        },
+        {
+          provide: getRepositoryToken(Category),
+          useValue: mockRepo as unknown as Repository<Category>,
+        },
+        {
+          provide: getRepositoryToken(SubCategory),
+          useValue: mockRepo as unknown as Repository<SubCategory>,
+        },
+        {
+          provide: getRepositoryToken(Pipeline),
+          useValue: mockRepo as unknown as Repository<Pipeline>,
+        },
+        {
+          provide: getRepositoryToken(PicGroup),
+          useValue: mockRepo as unknown as Repository<PicGroup>,
+        },
+        {
+          provide: getRepositoryToken(PicGroupMember),
+          useValue: mockRepo as unknown as Repository<PicGroupMember>,
+        },
       ],
     }).compile();
 
@@ -41,8 +65,11 @@ describe('MasterDataService', () => {
   });
 
   it('should create a channel', async () => {
-    const dto = { name: 'IT' };
-    await expect(service.createChannel(dto as any)).resolves.toEqual({ id: 1, ...dto });
-    expect(mockRepo.create).toHaveBeenCalledWith(dto as any);
+    const dto: CreateChannelDto = { name: 'IT' };
+    await expect(service.createChannel(dto)).resolves.toEqual({
+      id: 1,
+      ...dto,
+    });
+    expect(mockRepo.create).toHaveBeenCalledWith(dto);
   });
 });

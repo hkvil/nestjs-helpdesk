@@ -19,7 +19,9 @@ import { UsersModule } from './users/users.module';
         type: 'postgres',
         url: config.get<string>('DATABASE_URL'),
         autoLoadEntities: true,
-        synchronize: (config.get('DB_SYNCHRONIZE') === 'true') || config.get('NODE_ENV') === 'development',
+        synchronize:
+          config.get('DB_SYNCHRONIZE') === 'true' ||
+          config.get('NODE_ENV') === 'development',
         ssl: config.get('DB_SSL') === 'true',
       }),
     }),
@@ -32,4 +34,4 @@ import { UsersModule } from './users/users.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

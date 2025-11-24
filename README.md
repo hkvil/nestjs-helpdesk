@@ -29,6 +29,8 @@
 
 ```bash
 $ npm install
+
+Copy `.env.example` to `.env` and set `DATABASE_URL` and other env vars before starting the app or running the seed script.
 ```
 
 ## Compile and run the project
@@ -55,6 +57,28 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+
+## Development helpers
+
+To seed development data (make sure your DB is configured via `.env`):
+
+```bash
+$ npm run seed
+
+---
+
+## Changes in this branch
+
+This branch prepares several improvements that will be merged in the next PR:
+
+- Move DB configuration to `.env` (see `.env.example`) and avoid hard-coded credentials.
+- Add global validation and DTOs using `class-validator` + `class-transformer`.
+- Implement missing CRUD endpoints for master-data, SLA, and knowledge base.
+- Add a minimal auth scaffold (password hashing), but no guards are enabled by default.
+- Add Node CI workflow (lint + tests) and ensure the Docker build workflow runs tests before pushing images.
+
+When reviewing the PR, please check the new endpoints in `API_DOCS.md`, verify updated tests, and confirm CI passes in your repository.
+```
 ```
 
 ## Deployment

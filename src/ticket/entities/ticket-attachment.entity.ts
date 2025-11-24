@@ -3,15 +3,15 @@ import { Ticket } from './ticket.entity';
 
 @Entity()
 export class TicketAttachment {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @ManyToOne(() => Ticket, (ticket) => ticket.attachments)
-    ticket: Ticket;
+  @ManyToOne(() => Ticket, (ticket) => ticket.attachments)
+  ticket: Ticket;
 
-    @Column()
-    file_name: string;
+  @Column()
+  file_name: string;
 
-    @Column({ nullable: true })
-    file_text: string;
+  @Column({ nullable: true })
+  file_text: string;
 }

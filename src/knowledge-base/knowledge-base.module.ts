@@ -9,4 +9,4 @@ import { KnowledgeBase } from './entities/knowledge-base.entity';
   controllers: [KnowledgeBaseController],
   providers: [KnowledgeBaseService],
 })
-export class KnowledgeBaseModule { }
+export class KnowledgeBaseModule {}

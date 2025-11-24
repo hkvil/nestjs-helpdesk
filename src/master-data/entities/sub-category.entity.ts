@@ -3,15 +3,19 @@ import { Category } from './category.entity';
 
 @Entity()
 export class SubCategory {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @ManyToOne(() => Category, (category) => category.subCategories)
-    category: Category;
+  @ManyToOne(() => Category, (category) => category.subCategories)
+  category: Category;
 
-    @Column({ type: 'enum', enum: ['low', 'medium', 'high', 'critical'], default: 'medium' })
-    priority: string;
+  @Column({
+    type: 'enum',
+    enum: ['low', 'medium', 'high', 'critical'],
+    default: 'medium',
+  })
+  priority: string;
 }

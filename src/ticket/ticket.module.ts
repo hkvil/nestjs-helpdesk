@@ -8,6 +8,8 @@ import { TicketStage } from './entities/ticket-stage.entity';
 import { TicketAssignee } from './entities/ticket-assignee.entity';
 import { TicketAssociation } from './entities/ticket-association.entity';
 import { TicketAttachment } from './entities/ticket-attachment.entity';
+import { SlaModule } from '../sla/sla.module';
+import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [
@@ -19,8 +21,10 @@ import { TicketAttachment } from './entities/ticket-attachment.entity';
       TicketAssociation,
       TicketAttachment,
     ]),
+    SlaModule,
+    UsersModule,
   ],
   controllers: [TicketController],
   providers: [TicketService],
 })
-export class TicketModule { }
+export class TicketModule {}

@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  app:
+    # Use the published image (pull from GHCR). If you prefer to build locally, replace image with 'build: .'
+    image: ghcr.io/hkvil/nestjs-helpdesk:main
+    env_file: .env
+    ports:
+      - "3000:3000" # internal app port. nginx will be used to expose port 80/443
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/ || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./deploy/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - app
+    restart: unless-stopped

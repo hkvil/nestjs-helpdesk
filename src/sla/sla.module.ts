@@ -8,6 +8,9 @@ import { SlaPolicy } from './entities/sla-policy.entity';
   imports: [TypeOrmModule.forFeature([SlaPolicy])],
   controllers: [SlaController],
   providers: [SlaService],
-  exports: [SlaService],
+  // Export both the service and a configured TypeOrmModule.forFeature so the
+  // SlaPolicy repository (SlaPolicyRepository) is available to modules that
+  // import SlaModule (e.g., TicketModule).
+  exports: [SlaService, TypeOrmModule.forFeature([SlaPolicy])],
 })
 export class SlaModule {}

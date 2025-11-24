@@ -1,0 +1,15 @@
+helpdesk.hidayat.me {
+  # Reverse proxy to the app container
+  reverse_proxy app:3000
+
+  # Gzip responses
+  encode gzip
+
+  # Keep logs in container-mounted folder for debugging (persist in ./deploy/caddy_data)
+  log {
+    output file /var/log/caddy/access.log
+  }
+
+  # Replace with your real email for ACME registration; Caddy will use Let's Encrypt
+  tls admin@hidayat.me
+}

@@ -65,3 +65,11 @@ Note: This documentation is for the local development API. Authentication is sca
 ---
 
 If you want me to export this into an OpenAPI/Swagger spec next, I can add a minimal swagger setup in the next PR.
+
+---
+
+Postman collection (Ticket Management)
+- Path: `postman/helpdesk-ticket-management.postman_collection.json`
+- Import into Postman and use the `Helpdesk Local` environment (`postman/helpdesk-environment.postman_environment.json`) with `{{baseUrl}}` set to `http://localhost:3000`.
+
+The collection contains sample requests and responses for ticket endpoints: Create, List, Get by ID, Update (stage / assignee).

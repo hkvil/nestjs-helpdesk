@@ -1,0 +1,108 @@
+{
+  "info": {
+    "name": "Helpdesk - Ticket Management",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "helpdesk-ticket-management-collection"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" }
+  ],
+  "item": [
+    {
+      "name": "Create Ticket",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"reporter_id\": 1,\n  \"channel\": \"Web\",\n  \"category\": \"General\",\n  \"sub_category\": \"Support\",\n  \"pipeline\": \"Default\",\n  \"name\": \"Cannot access account\",\n  \"description\": \"User cannot login after password reset.\",\n  \"priority\": \"high\",\n  \"source\": \"Portal\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/tickets",
+          "host": ["{{baseUrl}}"],
+          "path": ["tickets"]
+        }
+      },
+      "response": [
+        {
+          "name": "201 - created",
+          "status": "Created",
+          "code": 201,
+          "body": "{\n  \"id\": 123,\n  \"number\": \"T1679031234567\",\n  \"name\": \"Cannot access account\",\n  \"stage\": \"New\",\n  \"priority\": \"high\",\n  \"reporter\": { \"id\": 1, \"username\": \"alice\" },\n  \"created_date\": \"2025-11-25T08:00:00.000Z\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "List Tickets",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/tickets",
+          "host": ["{{baseUrl}}"],
+          "path": ["tickets"]
+        }
+      },
+      "response": [
+        {
+          "name": "200 - list",
+          "status": "OK",
+          "code": 200,
+          "body": "[\n  {\n    \"id\": 123,\n    \"number\": \"T1679031234567\",\n    \"name\": \"Cannot access account\",\n    \"stage\": \"New\",\n    \"reporter\": { \"id\": 1, \"username\": \"alice\" }\n  }\n]"
+        }
+      ]
+    },
+    {
+      "name": "Get Ticket by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/tickets/:id",
+          "host": ["{{baseUrl}}"],
+          "path": ["tickets", ":id"],
+          "variable": [
+            { "key": "id", "value": "123" }
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "200 - ticket details",
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"id\": 123,\n  \"number\": \"T1679031234567\",\n  \"name\": \"Cannot access account\",\n  \"description\": \"User cannot login after password reset.\",\n  \"stage\": \"New\",\n  \"reporter\": { \"id\": 1, \"username\": \"alice\" },\n  \"stages\": [ { \"stage\": \"New\", \"datetime\": \"2025-11-25T08:00:00Z\" } ],\n  \"assignees\": [],\n  \"attachments\": [],\n  \"associations\": []\n}"
+        }
+      ]
+    },
+    {
+      "name": "Update Ticket (stage)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"stage\": \"Assigned\" }"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/tickets/:id",
+          "host": ["{{baseUrl}}"],
+          "path": ["tickets", ":id"],
+          "variable": [ { "key": "id", "value": "123" } ]
+        }
+      },
+      "response": [
+        {
+          "name": "200 - updated",
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"id\": 123,\n  \"number\": \"T1679031234567\",\n  \"stage\": \"Assigned\",\n  \"assignee\": \"john\",\n  \"stages\": [ { \"stage\": \"New\", \"datetime\": \"2025-11-25T08:00:00Z\" }, { \"stage\": \"Assigned\", \"datetime\": \"2025-11-25T08:10:00Z\" } ]\n}"
+        }
+      ]
+    }
+  ]
+}
